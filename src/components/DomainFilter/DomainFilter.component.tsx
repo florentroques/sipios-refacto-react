@@ -1,5 +1,4 @@
 import React from 'react';
-import { threadId } from 'worker_threads';
 
 interface State {
   countries: string[],
