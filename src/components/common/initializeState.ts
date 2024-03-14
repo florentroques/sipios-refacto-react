@@ -12,6 +12,50 @@ function extractSubClassificationCode(domain: string) {
   return domain.substring(6)
 }
 
+function addCountryCodeToState(state: State, domain: string) {
+  const countryCode = extractCountryCode(domain);
+
+  if (state.countries.indexOf(countryCode) <= 0) {
+    state = {
+      ...state,
+      countries: [...state.countries, countryCode]
+    };
+  }
+
+  return state;
+}
+
+function addClassificationCodeToState(state: State, domain: string) {
+  const classificationCode = extractClassificationCode(domain);
+
+  return {
+    ...state,
+    classifications: [...state.classifications, classificationCode]
+  };
+}
+
+function addSubClassificationCodeToState(state: State, domain: string) {
+  const subClassificationCode = extractSubClassificationCode(domain);
+
+  let flag = false;
+
+  for (let j = 0; j < state.subClassifications.length; j++) {
+    if (state.subClassifications[j] === subClassificationCode) {
+      flag = true;
+      break;
+    }
+  }
+
+  if (!flag) {
+    state = ({
+      ...state,
+      subClassifications: [...state.subClassifications, subClassificationCode]
+    })
+  }
+
+  return state;
+}
+
 export function initializeState(domains: string[]) {
   let state: State = {
     countries: [],
@@ -20,37 +64,11 @@ export function initializeState(domains: string[]) {
   };
 
   for (let i = 0; i < domains.length; i++) {
-    const countryCode = extractCountryCode(domains[i]);
-    const classificationCode = extractClassificationCode(domains[i]);
-    const subClassificationCode = extractSubClassificationCode(domains[i]);
+    const domain = domains[i];
 
-    if (state.countries.indexOf(countryCode) <= 0) {
-      state = ({
-        ...state,
-        countries: [...state.countries, countryCode]
-      })
-    }
-
-    state = ({
-      ...state,
-      classifications: [...state.classifications, classificationCode]
-    })
-
-    let flag = false;
-
-    for (let j = 0; j < state.subClassifications.length; j++) {
-      if (state.subClassifications[j] === subClassificationCode) {
-        flag = true;
-        break;
-      }
-    }
-
-    if (!flag) {
-      state = ({
-        ...state,
-        subClassifications: [...state.subClassifications, subClassificationCode]
-      })
-    }
+    state = addCountryCodeToState(state, domain);
+    state = addClassificationCodeToState(state, domain);
+    state = addSubClassificationCodeToState(state, domain);
   }
 
   return {
