@@ -80,8 +80,6 @@ class DomainFilter extends React.Component<Props, State> {
       ...state,
       classifications: state.classifications.filter((e, i, l) => l.indexOf(e) === i),
     })
-
-    this.forceUpdate()
   }
 
   render() {
