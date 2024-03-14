@@ -27,7 +27,7 @@ class DomainFilter extends React.Component<Props, State> {
       this.state.classifications.push(domains[i].substring(3,5));
       let flag = false;
       for(let j = 0; j < this.state.subClassifications.length; j++) {
-        if (this.state.subClassifications[j] == domains[i].substring(6)) {
+        if (this.state.subClassifications[j] === domains[i].substring(6)) {
           flag = true
           break;
         }
