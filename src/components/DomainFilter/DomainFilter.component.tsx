@@ -20,8 +20,6 @@ class DomainFilter extends React.Component<Props, State> {
       subClassifications: []
     }
 
-    const s: any = {};
-
     for(let i = 0; i < domains.length; i++) {
       if (this.state.countries.indexOf(domains[i].substring(0,2)) <= 0) {
         this.state.countries.push(domains[i].substring(0,2))
